@@ -1,0 +1,1040 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Global-Uzbek</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#f6fbff; --card:#fff; --ink:#052a36;
+  --uzbek-blue:#1aa0ff; --uzbek-green:#2ec06f; --uzbek-red:#e53935;
+  --muted:#6b7b86;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial;color:var(--ink);background:linear-gradient(180deg,#eef8ff,#f6fff4)}
+.header{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;gap:12px;background:linear-gradient(90deg,rgba(26,160,255,0.08),rgba(46,192,111,0.06));border-bottom:6px solid rgba(0,0,0,0.03);}
+.brand{display:flex;align-items:center;gap:14px}
+img{
+  background-color: transparent;
+  height: 114px;
+  width: 114px;
+
+}
+.title{font-weight:800;font-size:18px}
+.subtitle{font-size:12px;color:var(--muted)}
+.clock{font-weight:700;color:var(--uzbek-blue);text-align:right}
+
+
+.language-switcher {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-left: auto;
+  margin-right: 20px;
+}
+
+.lang-btn {
+  padding: 6px 12px;
+  border: 1px solid rgba(6,40,60,0.1);
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 12px;
+  transition: all 0.3s ease;
+}
+
+.lang-btn.active {
+  background: linear-gradient(90deg, var(--uzbek-blue), var(--uzbek-green));
+  color: white;
+  border-color: transparent;
+}
+
+.container{max-width:1200px;margin:22px auto;padding:18px;display:grid;grid-template-columns:1fr 360px;gap:18px}
+.main{background:var(--card);border-radius:14px;padding:18px;box-shadow:0 12px 40px rgba(4,30,50,0.06)}
+.side{background:linear-gradient(180deg,rgba(255,255,255,0.8),rgba(255,255,255,0.95));border-radius:12px;padding:14px;box-shadow:0 8px 20px rgba(4,30,50,0.04)}
+
+.tabs{display:flex;gap:8px;margin-bottom:12px}
+.tab-btn{padding:8px 12px;border-radius:10px;border:1px solid rgba(6,40,60,0.06);background:transparent;cursor:pointer;color:var(--muted);font-weight:700}
+.tab-btn.active{background:linear-gradient(90deg,var(--uzbek-blue),var(--uzbek-green));color:white;box-shadow:0 10px 30px rgba(46,192,111,0.08)}
+
+.controls{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+input[type="text"], input[type="number"], select{padding:10px;border-radius:10px;border:1px solid rgba(6,40,60,0.06);flex:1}
+.btn{background:linear-gradient(90deg,var(--uzbek-blue),var(--uzbek-green));color:white;border:none;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:800}
+.btn.ghost{background:transparent;border:1px solid rgba(6,40,60,0.06);color:var(--ink);font-weight:700}
+.btn.danger{background:linear-gradient(90deg,#ff7b7b,#e53935);}
+
+#wordList{margin:12px 0;padding:0;list-style:none;display:grid;gap:8px;max-height:420px;overflow:auto}
+.word-row{display:flex;align-items:center;justify-content:space-between;padding:10px;border-radius:12px;border:1px solid rgba(6,40,60,0.04);background:linear-gradient(180deg,#fff,#f7fbff)}
+.word-left{display:flex;align-items:center;gap:12px}
+.check{width:18px;height:18px}
+.w-word{font-weight:800;font-size:16px}
+.w-meaning{font-size:13px;color:var(--muted);margin-top:2px}
+
+.flash-area{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;justify-content:center}
+.flashcard{width:540px;height:320px;border-radius:14px;background:linear-gradient(180deg,#fff,#f7fbff);box-shadow:0 20px 50px rgba(16,40,80,0.08);display:flex;align-items:center;justify-content:center;perspective:1400px;position:relative;border:1px solid rgba(6,40,60,0.04)}
+.card-viewport{width:92%;height:86%;border-radius:12px;position:relative;transform-style:preserve-3d;transition:transform .7s;display:flex;align-items:center;justify-content:center}
+.card-viewport.flipped{transform:rotateY(180deg)}
+.card-face{position:absolute;inset:12px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:18px;background:linear-gradient(180deg,#fff,#eaf8ff);backface-visibility:hidden;border:1px solid rgba(6,40,60,0.02)}
+.card-back{transform:rotateY(180deg);background:linear-gradient(180deg,#eaf8ff,#e0fff0)}
+
+.flash-controls{display:flex;gap:8px;justify-content:center;margin-top:12px}
+
+#tab-translator .translation-box {display: flex;flex-direction: column;gap: 15px;}
+#tab-translator textarea {width: 100%;padding: 15px;border: 2px solid #ddd;border-radius: 8px;font-size: 16px;box-sizing: border-box;resize: none;min-height: 120px;}
+#tab-translator textarea:focus {outline: none;border-color: var(--uzbek-blue);}
+#tab-translator .controls {display: flex;justify-content: space-between;align-items: center;}
+#tab-translator select {padding: 10px;border: 2px solid #ddd;border-radius: 8px;background-color: white;font-size: 16px;cursor: pointer;}
+#tab-translator #translateBtn {padding: 12px 25px;background-color: var(--uzbek-blue);color: white;border: none;border-radius: 8px;font-size: 16px;font-weight: bold;cursor: pointer;transition: background-color 0.3s ease;}
+#tab-translator #translateBtn:hover {background-color: #168acd;}
+#tab-translator #translatedText {background-color: #e9e9e9;border: 2px solid #ccc;cursor: not-allowed;}
+#tab-translator .message {margin-top: 15px;font-weight: bold;color: #555;min-height: 20px;}
+.quiz-area{display:flex;flex-direction:column;gap:12px;align-items:center}
+.question{font-weight:800;font-size:20px;text-align:center}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;max-width:680px}
+.opt-btn{padding:12px;border-radius:10px;border:1px solid rgba(6,40,60,0.04);background:white;cursor:pointer;font-weight:700}
+.opt-btn.correct{border-color:var(--uzbek-green);background:linear-gradient(90deg,rgba(46,192,111,0.08),transparent)}
+.opt-btn.wrong{border-color:var(--uzbek-red);background:linear-gradient(90deg,rgba(229,57,53,0.04),transparent)}
+.timer{font-weight:900;color:var(--uzbek-blue)}
+
+.results{display:grid;gap:8px}
+.result-row{display:flex;justify-content:space-between;padding:10px;border-radius:8px;background:linear-gradient(180deg,#fff,#f7fbff);border:1px solid rgba(6,40,60,0.04)}
+
+.side h4{margin:8px 0;font-size:14px}
+.leaderboard{display:grid;gap:8px;max-height:300px;overflow:auto}
+.lb-row{display:flex;justify-content:space-between;padding:8px;border-radius:8px;background:linear-gradient(90deg,rgba(26,160,255,0.04),rgba(46,192,111,0.02));border:1px solid rgba(6,40,60,0.03)}
+footer{max-width:1200px;margin:18px auto;padding:8px;text-align:center;color:var(--muted);font-size:13px}
+@media (max-width:980px){ .container{grid-template-columns:1fr;padding:12px} .flashcard{width:92%;height:260px} .options{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="brand">
+    <div class="logo">
+      <img src="./a-minimalist-logo-design-featuring-the-t_mDEM7iNmQfWVXVfn4SZEzQ_5O8cj9HbTzeYUoXukUNBYg-removebg-preview.png" alt="">
+    </div>
+    <div>
+      <div class="title" data-uz="Global-Uzbek — O'zbek Milliy Lug'ati" data-en="Global-Uzbek — Uzbek National Dictionary">Global-Uzbek</div>
+      <div class="subtitle" data-uz="Lugʻat • Flashcard • Quiz • Tarjimon • Export/Import" data-en="Uzbek dictionary • Flashcard • Quiz • Translator • Export/Import">Lug'at • Flashcard • Quiz • Tarjimon • Export/Import</div>
+    </div>
+  </div>
+  <div class="language-switcher">
+    <button class="lang-btn active" data-lang="uz">O'Z</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+  </div>
+  <div class="clock" id="topClock">--:--:--</div>
+</div>
+
+<div class="container">
+  <div class="main">
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="lugat" data-uz="📚 Lugʻat" data-en="📚 Dictionary">📚 Lugʻat</button>
+      <button class="tab-btn" data-tab="flash" data-uz="🃏 Flashcard" data-en="🃏 Flashcard">🃏 Flashcard</button>
+      <button class="tab-btn" data-tab="quiz" data-uz="📝 Quiz" data-en="📝 Quiz">📝 Quiz</button>
+      <button class="tab-btn" data-tab="results" data-uz="📊 Natija" data-en="📊 Results">📊 Natija</button>
+      <button class="tab-btn" data-tab="translator" data-uz="🌐 Tarjimon" data-en="🌐 Translator">🌐 Tarjimon</button>
+    </div>
+
+    
+    <section id="tab-lugat">
+      <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap">
+        <div style="flex:1;min-width:260px">
+          <div class="controls">
+            <input id="searchInput" type="text" placeholder="So'z yoki ma'no qidiring..." data-uz-placeholder="So'z yoki ma'no qidiring..." data-en-placeholder="Search word or meaning..." />
+            <button class="btn ghost" id="selectAllBtn" data-uz="Barchasini tanlash" data-en="Select All">Barchasini tanlash</button>
+            <button class="btn danger" id="deleteSelectedBtn" data-uz="🗑 Tanlanganlarni o'chirish" data-en="🗑 Delete Selected">🗑 Tanlanganlarni o'chirish</button>
+          </div>
+        </div>
+
+        <div style="min-width:320px;display:flex;gap:8px;align-items:center">
+          <input id="newWord" type="text" placeholder="Yangi so'z (masalan: kitob)" data-uz-placeholder="Yangi so'z (masalan: kitob)" data-en-placeholder="New word (e.g.: book)" />
+          <input id="newMean" type="text" placeholder="Ma'nosi (masalan: book)" data-uz-placeholder="Ma'nosi (masalan: book)" data-en-placeholder="Meaning (e.g.: book)" />
+          <button class="btn" id="addWordBtn" data-uz="+ Qo'sh" data-en="+ Add">+ Qo'sh</button>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:8px;margin-top:8px;align-items:center;flex-wrap:wrap">
+        <button class="btn ghost" id="exportBtn" data-uz="Export JSON" data-en="Export JSON">Export JSON</button>
+        <label class="btn ghost" style="cursor:pointer">
+          <span data-uz="Import JSON" data-en="Import JSON">Import JSON</span>
+          <input id="importFile" type="file" accept=".json" style="display:none" />
+        </label>
+        <div style="color:var(--muted);font-size:13px;margin-left:auto">
+          <span data-uz="So'zlar:" data-en="Words:">So'zlar:</span> <strong id="wordCount">0</strong>
+        </div>
+      </div>
+
+      <ul id="wordList"></ul>
+    </section>
+
+    
+    <section id="tab-flash" style="display:none">
+      <div style="display:flex;flex-direction:column;gap:8px;align-items:center;margin-bottom:12px">
+        <div style="display:flex;gap:8px;width:100%;justify-content:center;align-items:center">
+          <button class="btn ghost" id="flashExportBtn" data-uz="Export Flashcards" data-en="Export Flashcards">Export Flashcards</button>
+          <button class="btn ghost" id="flashImportBtn" data-uz="Import Flashcards" data-en="Import Flashcards">Import Flashcards</button>
+          <button class="btn ghost" id="flashClearBtn" title="Import qilingan flashlarni tozalash" data-uz-title="Import qilingan flashlarni tozalash" data-en-title="Clear imported flashcards" data-uz="Clear Imported" data-en="Clear Imported">Clear Imported</button>
+          <input id="flashImportFile" type="file" accept=".json" style="display:none">
+          <div id="flashSourceLabel" style="color:var(--muted);margin-left:12px">Source: Lug'at</div>
+        </div>
+      </div>
+
+      <div class="flash-area">
+        <div class="flashcard" id="flashcard" title="Kartani bosib aylantiring" data-uz-title="Kartani bosib aylantiring" data-en-title="Click to flip the card">
+          <div class="card-viewport" id="cardViewport">
+            <div class="card-face card-front" id="cardFront">
+              <div style="font-size:40px;font-weight:900" id="flashWord">—</div>
+              <div style="margin-top:10px;color:var(--muted)" id="flashIdx">—</div>
+            </div>
+            <div class="card-face card-back" id="cardBack">
+              <div style="font-size:22px;font-weight:800" id="flashMeaning">—</div>
+              <div style="margin-top:8px;color:var(--muted);font-size:13px" id="flashExtra" data-uz="Ma'lumot" data-en="Information">Ma'lumot</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="min-width:240px;display:flex;flex-direction:column;gap:10px;align-items:center">
+          <div style="display:flex;gap:8px;width:100%;justify-content:center" class="flash-controls">
+            <button class="btn ghost" id="prevFlash" data-uz="◀ Oldingi" data-en="◀ Previous">◀ Oldingi</button>
+            <button class="btn" id="playFlash" data-uz="🔊 Tinglash" data-en="🔊 Listen">🔊 Tinglash</button>
+            <button class="btn ghost" id="nextFlash" data-uz="Keyingi ▶" data-en="Next ▶">Keyingi ▶</button>
+          </div>
+          <div style="font-size:13px;color:var(--muted);text-align:center" data-uz="Kartani bosib orqaga/oldinga aylantiring. Har kartada talaffuz mavjud." data-en="Click the card to flip back/forth. Each card has pronunciation.">Kartani bosib orqaga/oldinga aylantiring. Har kartada talaffuz mavjud.</div>
+        </div>
+      </div>
+    </section>
+
+    
+    <section id="tab-quiz" style="display:none">
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center">
+        <label style="font-size:13px;color:var(--muted)" data-uz="Savollar rejimi:" data-en="Question mode:">Savollar rejimi:</label>
+        <select id="quizMode">
+          <option value="wordToMeaning" data-uz="So'z → Ma'no (multiple choice)" data-en="Word → Meaning (multiple choice)">So'z → Ma'no (multiple choice)</option>
+          <option value="meaningToWord" data-uz="Ma'no → So'z (multiple choice)" data-en="Meaning → Word (multiple choice)">Ma'no → So'z (multiple choice)</option>
+        </select>
+        <label style="font-size:13px;color:var(--muted)" data-uz="Savollar soni:" data-en="Number of questions:">Savollar soni:</label>
+        <input id="quizCount" type="number" min="1" value="5" style="width:80px;padding:8px;border-radius:8px;border:1px solid rgba(6,40,60,0.06)" />
+
+        <button class="btn ghost" id="quizImportBtn" data-uz="Import JSON (Quiz)" data-en="Import JSON (Quiz)">Import JSON (Quiz)</button>
+        <input id="quizImportFile" type="file" accept=".json" style="display:none">
+
+        <label style="font-size:13px;color:var(--muted)" data-uz="Vaqt / savol (s):" data-en="Time / question (s):">Vaqt / savol (s):</label>
+        <input id="timePerQuestion" type="number" min="5" max="120" value="20" style="width:90px;padding:8px;border-radius:8px;border:1px solid rgba(6,40,60,0.06)" />
+
+        <button class="btn" id="startQuizBtn" data-uz="Boshlash" data-en="Start">Boshlash</button>
+        <button class="btn ghost" id="stopQuizBtn" data-uz="To'xtat" data-en="Stop">To'xtat</button>
+      </div>
+
+      <div style="margin-top:18px;display:flex;flex-direction:column;align-items:center">
+        <div class="question" id="quizQuestion">Quiz hali boshlanmadi</div>
+        <div class="timer" id="quizTimer">-- s</div>
+
+        <div class="options" id="quizOptions" style="margin-top:12px"></div>
+
+        <div style="margin-top:10px;display:flex;gap:12px;align-items:center">
+          <div style="font-size:13px;color:var(--muted)">
+            <span data-uz="Yechilgan:" data-en="Solved:">Yechilgan:</span> <span id="quizProgress">0 / 0</span>
+          </div>
+          <div style="font-size:13px;color:var(--muted)">
+            <span data-uz="Ball:" data-en="Score:">Ball:</span> <strong id="quizScore">0</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+<section id="tab-translator" style="display:none">
+    <div class="translation-box">
+        <textarea id="inputText" placeholder="Tarjima qilish uchun matn kiriting..." data-uz-placeholder="Tarjima qilish uchun matn kiriting..." data-en-placeholder="Enter text to translate..." rows="5"></textarea>
+        <div class="controls">
+            <select id="sourceLang">
+                <option value="en" data-uz="Inglizcha" data-en="English">Inglizcha</option>
+                <option value="uz" data-uz="O'zbekcha" data-en="Uzbek">O'zbekcha</option>
+            </select>
+            <button class="btn" id="translateBtn" data-uz="Tarjima qilish" data-en="Translate">Tarjima qilish</button>
+            <select id="targetLang">
+                <option value="uz" data-uz="O'zbekcha" data-en="Uzbek">O'zbekcha</option>
+                <option value="en" data-uz="Inglizcha" data-en="English">Inglizcha</option>
+            </select>
+        </div>
+        <textarea id="translatedText" placeholder="Tarjima bu yerda paydo bo'ladi..." data-uz-placeholder="Tarjima bu yerda paydo bo'ladi..." data-en-placeholder="Translation will appear here..." rows="5" readonly></textarea>
+        <div id="statusMessage" class="message"></div>
+    </div>
+</section>
+
+    
+    <section id="tab-results" style="display:none">
+      <h3 data-uz="Oxirgi natija" data-en="Latest Results">Oxirgi natija</h3>
+      <div id="resultsArea" class="results" style="margin-top:12px">
+        <div style="color:var(--muted)" data-uz="Quizni yakunlaganingizda shu yerda tafsilotlar chiqadi." data-en="Details will appear here when you finish the quiz.">Quizni yakunlaganingizda shu yerda tafsilotlar chiqadi.</div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:12px;align-items:center">
+        <input id="playerName" placeholder="Ismingiz (leaderboard uchun)" data-uz-placeholder="Ismingiz (leaderboard uchun)" data-en-placeholder="Your name (for leaderboard)" style="padding:8px;border-radius:8px;border:1px solid rgba(6,40,60,0.06)" />
+        <button class="btn" id="saveResultBtn" data-uz="Natijani saqlash" data-en="Save Result">Natijani saqlash</button>
+        <button class="btn ghost" id="clearResultsBtn" data-uz="Tozalash" data-en="Clear">Tozalash</button>
+      </div>
+    </section>
+  </div>
+
+  
+  <aside class="side">
+    <h4 data-uz="Statistika" data-en="Statistics">Statistika</h4>
+    <div style="display:flex;gap:8px;flex-direction:column">
+      <div style="display:flex;justify-content:space-between">
+        <span class="small" data-uz="Soʻzlar soni" data-en="Word count">Soʻzlar soni</span>
+        <strong id="sideWordCount">0</strong>
+      </div>
+      <div style="display:flex;justify-content:space-between">
+        <span class="small" data-uz="Oxirgi amal" data-en="Last action">Oxirgi amal</span>
+        <span id="lastAction" style="color:var(--muted)">—</span>
+      </div>
+    </div>
+
+    <hr style="margin:12px 0;border:none;border-top:1px solid rgba(6,40,60,0.04)" />
+
+    <h4 data-uz="Leaderboard (mahalliy)" data-en="Leaderboard (local)">Leaderboard (mahalliy)</h4>
+    <div class="leaderboard" id="leaderboard"></div>
+
+    <hr style="margin:12px 0;border:none;border-top:1px solid rgba(6,40,60,0.04)" />
+
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <button class="btn" id="resetAllBtn" data-uz="Natijalarni tozalash" data-en="Clear Results">Natijalarni tozalash</button>
+      <div style="font-size:12px;color:var(--muted)" data-uz="Natijalar localStorage dan o'chadi. Lugʻat saqlanadi." data-en="Results will be cleared from localStorage. Dictionary remains.">Natijalar localStorage dan o'chadi. Lugʻat saqlanadi.</div>
+    </div>
+  </aside>
+</div>
+
+<footer data-uz="© 2025 Global-Uzbek — Oʻzbek milliyligi ruhida" data-en="© 2025 Global-Uzbek — In the spirit of Uzbek nationalism">© 2025 Global-Uzbek — Oʻzbek milliyligi ruhida</footer>
+
+<script>
+
+let currentLanguage = localStorage.getItem('lexi_language') || 'uz';
+
+function setLanguage(lang) {
+    currentLanguage = lang;
+    localStorage.setItem('lexi_language', lang);
+    updateLanguage();
+}
+
+function updateLanguage() {
+    
+    document.querySelectorAll('[data-uz], [data-en]').forEach(element => {
+        if (element.hasAttribute(`data-${currentLanguage}`)) {
+            const text = element.getAttribute(`data-${currentLanguage}`);
+            if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                
+            } else if (element.tagName === 'OPTION') {
+                element.textContent = text;
+            } else {
+                element.textContent = text;
+            }
+        }
+    });
+
+    document.querySelectorAll('[data-uz-placeholder], [data-en-placeholder]').forEach(element => {
+        if (element.hasAttribute(`data-${currentLanguage}-placeholder`)) {
+            element.placeholder = element.getAttribute(`data-${currentLanguage}-placeholder`);
+        }
+    });
+
+    
+    document.querySelectorAll('[data-uz-title], [data-en-title]').forEach(element => {
+        if (element.hasAttribute(`data-${currentLanguage}-title`)) {
+            element.title = element.getAttribute(`data-${currentLanguage}-title`);
+        }
+    });
+
+    
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === currentLanguage);
+    });
+
+    
+    document.documentElement.lang = currentLanguage;
+    
+    
+    updateFlashSourceLabel();
+    
+    
+    renderWordList();
+}
+
+function updateFlashSourceLabel() {
+    const flashSourceLabel = document.getElementById('flashSourceLabel');
+    if (flashSourceLabel) {
+        if (state.flashWords && state.flashWords.length) {
+            flashSourceLabel.textContent = currentLanguage === 'uz' ? 
+                `Manba: Import (${state.flashWords.length})` : 
+                `Source: Imported (${state.flashWords.length})`;
+        } else {
+            flashSourceLabel.textContent = currentLanguage === 'uz' ? 
+                `Manba: Lug'at (${state.words.length})` : 
+                `Source: Dictionary (${state.words.length})`;
+        }
+    }
+}
+
+
+document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        setLanguage(btn.dataset.lang);
+    });
+});
+
+
+function genId(){ return 'id_'+Math.random().toString(36).slice(2,9); }
+const DEFAULT_WORDS = [
+  {id: genId(), word:"salom", meaning:"hello"},
+  {id: genId(), word:"kitob", meaning:"book"},
+  {id: genId(), word:"til", meaning:"language"},
+  {id: genId(), word:"dunyo", meaning:"world"},
+  {id: genId(), word:"maktab", meaning:"school"},
+  {id: genId(), word:"xalq", meaning:"people"}
+];
+
+function normalizeWord(item){
+  return { id: item.id || genId(), word: String(item.word||'').trim(), meaning: String(item.meaning||item.mean||'').trim() };
+}
+
+function loadState(){
+  try{
+    const s = JSON.parse(localStorage.getItem('lexi_state')||'{}');
+    const words = Array.isArray(s.words) ? s.words.map(normalizeWord) : DEFAULT_WORDS.slice();
+    const seen = new Set();
+    words.forEach(w=>{ if(!w.id) w.id=genId(); while(seen.has(w.id)) w.id = genId(); seen.add(w.id); });
+    const quizWords = Array.isArray(s.quizWords) ? s.quizWords.map(normalizeWord) : [];
+    const flashWords = Array.isArray(s.flashWords) ? s.flashWords.map(normalizeWord) : [];
+    return { words, quizWords, flashWords, leaderboard: s.leaderboard || [], lastAction: s.lastAction || '' };
+  }catch(e){ return { words: DEFAULT_WORDS.slice(), quizWords: [], flashWords: [], leaderboard: [], lastAction: '' }; }
+}
+function saveState(){
+  const s = { words: state.words, quizWords: state.quizWords, flashWords: state.flashWords, leaderboard: state.leaderboard, lastAction: state.lastAction };
+  localStorage.setItem('lexi_state', JSON.stringify(s));
+}
+let state = loadState();
+
+
+let selectedIds = new Set();
+let lastRenderedIds = [];
+let selectAllActive = false;
+
+
+const $ = id => document.getElementById(id);
+function now(){ return new Date().toLocaleString(); }
+function addAction(text){ state.lastAction = text; saveState(); renderSide(); }
+
+
+function updateClock(){ $('topClock').textContent = new Date().toLocaleTimeString(); }
+setInterval(updateClock,1000); updateClock();
+
+
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const tab = btn.dataset.tab;
+    document.querySelectorAll('section[id^="tab-"]').forEach(s=>s.style.display='none');
+    $('tab-'+tab).style.display='block';
+    if(tab==='flash') loadFlashcard();
+    if(tab==='results') renderResults();
+  });
+});
+
+
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function escapeHtml(s){ return String(s).replace(/[&<>":'`]/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;', '`':'&#96;' }[c])); }
+
+function getWordIndexById(id){ return state.words.findIndex(w=>w.id===id); }
+function getWordById(id){ return state.words.find(w=>w.id===id); }
+
+
+function renderWordList(){
+  const q = ($('searchInput').value||'').trim().toLowerCase();
+  const ul = $('wordList'); ul.innerHTML = '';
+  const list = state.words;
+  const filtered = list.filter(w => {
+    if(!q) return true;
+    return w.word.toLowerCase().includes(q) || w.meaning.toLowerCase().includes(q);
+  });
+  lastRenderedIds = filtered.map(w=>w.id);
+  filtered.forEach(item=>{
+    const li = document.createElement('li'); li.className='word-row';
+    const checked = selectedIds.has(item.id) ? 'checked' : '';
+    li.innerHTML = `
+      <div class="word-left">
+        <input class="check" type="checkbox" data-id="${item.id}" ${checked} />
+        <div>
+          <div class="w-word">${escapeHtml(item.word)}</div>
+          <div class="w-meaning">${escapeHtml(item.meaning)}</div>
+        </div>
+      </div>
+      <div class="row-actions">
+        <button class="btn ghost tts-btn" title="${currentLanguage === 'uz' ? 'Talaffuz' : 'Pronunciation'}" data-id="${item.id}">🔊</button>
+        <button class="btn ghost edit-btn" title="${currentLanguage === 'uz' ? 'O\'zgartirish' : 'Edit'}" data-id="${item.id}">✏️</button>
+        <button class="btn danger del-btn" title="${currentLanguage === 'uz' ? 'O\'chirish' : 'Delete'}" data-id="${item.id}">🗑</button>
+      </div>
+    `;
+    ul.appendChild(li);
+  });
+
+  ul.querySelectorAll('.check').forEach(cb=>{
+    cb.addEventListener('change', e=>{
+      const id = e.target.dataset.id;
+      if(e.target.checked) selectedIds.add(id); else selectedIds.delete(id);
+      if(!e.target.checked) selectAllActive = false;
+      renderSide();
+    });
+  });
+  ul.querySelectorAll('.tts-btn').forEach(b=> b.addEventListener('click', e=>{ 
+    const w = getWordById(b.dataset.id); 
+    if(w) tts(w.word); 
+  }));
+  ul.querySelectorAll('.edit-btn').forEach(b=> b.addEventListener('click', e=> editWord(b.dataset.id)));
+  ul.querySelectorAll('.del-btn').forEach(b=> b.addEventListener('click', e=> deleteWord(b.dataset.id)));
+
+  $('wordCount').textContent = state.words.length;
+  $('sideWordCount').textContent = state.words.length;
+  $('selectAllBtn').textContent = selectAllActive ? 
+    (currentLanguage === 'uz' ? 'Hammasini bekor qilish' : 'Deselect All') : 
+    (currentLanguage === 'uz' ? 'Barchasini tanlash' : 'Select All');
+}
+
+
+$('searchInput').addEventListener('input', ()=> {
+  selectAllActive = false;
+  renderWordList();
+});
+
+
+$('addWordBtn').addEventListener('click', ()=>{
+  const w = ($('newWord').value||'').trim();
+  const m = ($('newMean').value||'').trim();
+  if(!w || !m){ alert(currentLanguage === 'uz' ? "So'z va ma'noni to'ldiring" : "Please fill both word and meaning"); return; }
+  if(state.words.some(x=>x.word.toLowerCase()===w.toLowerCase())){ alert(currentLanguage === 'uz' ? "Bu so'z allaqachon mavjud" : "This word already exists"); return; }
+  state.words.push({id: genId(), word:w, meaning:m});
+  $('newWord').value=''; $('newMean').value='';
+  addAction(currentLanguage === 'uz' ? `So'z qo'shildi: ${w}` : `Word added: ${w}`);
+  saveState(); renderWordList();
+});
+
+
+function deleteWord(id){
+  const idx = getWordIndexById(id);
+  if(idx===-1) return;
+  if(!confirm(currentLanguage === 'uz' ? `"${state.words[idx].word}" o'chirilsinmi?` : `Delete "${state.words[idx].word}"?`)) return;
+  const removed = state.words.splice(idx,1);
+  selectedIds.delete(id);
+  addAction(currentLanguage === 'uz' ? `So'z o'chirildi: ${removed[0].word}` : `Word deleted: ${removed[0].word}`);
+  saveState(); renderWordList();
+}
+
+
+function editWord(id){
+  const idx = getWordIndexById(id);
+  if(idx===-1) return;
+  const cur = state.words[idx];
+  const nw = prompt(currentLanguage === 'uz' ? "So'zni tahrirlash:" : "Edit word:", cur.word);
+  if(nw===null) return;
+  const nm = prompt(currentLanguage === 'uz' ? "Ma'nosini tahrirlash:" : "Edit meaning:", cur.meaning);
+  if(nm===null) return;
+  state.words[idx] = { id: cur.id, word: nw.trim() || cur.word, meaning: nm.trim() || cur.meaning };
+  addAction(currentLanguage === 'uz' ? `So'z o'zgartirildi: ${state.words[idx].word}` : `Word edited: ${state.words[idx].word}`);
+  saveState(); renderWordList();
+}
+
+
+function toggleSelectAll(){
+  if(!lastRenderedIds || lastRenderedIds.length===0){ alert(currentLanguage === 'uz' ? "Hech qanday so'z ko'rinmadi" : "No words visible"); return; }
+  if(!selectAllActive){
+    lastRenderedIds.forEach(id=>selectedIds.add(id));
+    selectAllActive = true;
+  } else {
+    lastRenderedIds.forEach(id=>selectedIds.delete(id));
+    selectAllActive = false;
+  }
+  renderWordList();
+}
+$('selectAllBtn').addEventListener('click', toggleSelectAll);
+
+
+$('deleteSelectedBtn').addEventListener('click', ()=>{
+  const ids = Array.from(selectedIds);
+  if(!ids.length){ alert(currentLanguage === 'uz' ? "Hech nima tanlanmadi" : "Nothing selected"); return; }
+  if(!confirm(currentLanguage === 'uz' ? `${ids.length} ta so'zni o'chirasizmi?` : `Delete ${ids.length} words?`)) return;
+  state.words = state.words.filter(w=>!selectedIds.has(w.id));
+  selectedIds.clear(); selectAllActive = false;
+  addAction(currentLanguage === 'uz' ? `Tanlangan ${ids.length} ta so'z o'chirildi` : `${ids.length} selected words deleted`);
+  saveState(); renderWordList();
+});
+
+
+$('exportBtn').addEventListener('click', ()=>{
+  const data = JSON.stringify({words:state.words.map(w=>({word:w.word,meaning:w.meaning}))},null,2);
+  const blob = new Blob([data],{type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url; a.download='lexiuz_export.json'; a.click();
+  URL.revokeObjectURL(url);
+});
+
+$('importFile').addEventListener('change', (e)=>{
+  const f = e.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = ()=> {
+    try{
+      const j = JSON.parse(r.result);
+      if(!Array.isArray(j.words)){ alert(currentLanguage === 'uz' ? 'JSON formati xato — "words" massiv bo\'lishi kerak' : 'Invalid JSON format — "words" must be an array'); e.target.value=''; return; }
+      let added = 0;
+      j.words.forEach(w=>{
+        if(!w.word || !w.meaning) return;
+        if(!state.words.some(x=>x.word.toLowerCase()===String(w.word).toLowerCase())){
+          state.words.push({id: genId(), word:String(w.word).trim(), meaning:String(w.meaning).trim()}); added++;
+        }
+      });
+      addAction(currentLanguage === 'uz' ? `Import: ${added} ta yangi so'z qo'shildi (lug'atga)` : `Import: ${added} new words added to dictionary`);
+      saveState(); renderWordList();
+      alert(currentLanguage === 'uz' ? `${added} ta yangi so'z import qilindi` : `${added} new words imported`);
+    }catch(err){ alert(currentLanguage === 'uz' ? 'Import xatolik: '+err.message : 'Import error: '+err.message); }
+    e.target.value = '';
+  };
+  r.readAsText(f);
+});
+
+
+function tts(text){
+  try{
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'uz-UZ';
+    u.rate = 0.95; u.pitch = 1;
+    const vs = speechSynthesis.getVoices();
+    const prefer = vs.find(v=>/uz|UZ/i.test(v.lang) || /uzb/i.test(v.name));
+    if(prefer) u.voice = prefer;
+    speechSynthesis.speak(u);
+  }catch(e){ console.warn('TTS mavjud emas'); }
+}
+
+
+let flashIndex = 0;
+const cardViewport = $('cardViewport');
+
+$('flashImportBtn').addEventListener('click', ()=> $('flashImportFile').click());
+$('flashImportFile').addEventListener('change', (e)=>{
+  const f = e.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = ()=>{
+    try{
+      const parsed = JSON.parse(r.result);
+      let arr = null;
+      if(Array.isArray(parsed)) arr = parsed;
+      else if(Array.isArray(parsed.words)) arr = parsed.words;
+      if(!Array.isArray(arr)){ alert(currentLanguage === 'uz' ? "Flashcards JSON formati xato — 'words' yoki array kerak" : "Invalid flashcards JSON — 'words' or array required"); e.target.value=''; return; }
+      const cleaned = [];
+      arr.forEach(item=>{
+        if(!item) return;
+        const w = String(item.word || '').trim();
+        const m = String(item.meaning || item.mean || item.meano || '').trim();
+        if(w && m) cleaned.push({id: genId(), word:w, meaning:m});
+      });
+      if(cleaned.length===0){ alert(currentLanguage === 'uz' ? "JSON ichida yaroqli so'z topilmadi" : "No valid words found in JSON"); e.target.value=''; return; }
+      state.flashWords = cleaned;
+      saveState();
+      addAction(currentLanguage === 'uz' ? `Flashcard uchun ${cleaned.length} ta so'z import qilindi (lug'atga qo'shilmadi)` : `Imported ${cleaned.length} words for flashcards (not added to dictionary)`);
+      alert(currentLanguage === 'uz' ? `${cleaned.length} ta flashcard so'zlari yuklandi!` : `${cleaned.length} flashcard words loaded!`);
+      loadFlashcard();
+    }catch(err){ alert(currentLanguage === 'uz' ? "Xato: "+err.message : "Error: "+err.message); }
+    e.target.value = '';
+  };
+  r.readAsText(f);
+});
+
+$('flashExportBtn').addEventListener('click', ()=>{
+  const src = (state.flashWords && state.flashWords.length) ? state.flashWords : state.words;
+  const data = JSON.stringify({words: src.map(w=>({word:w.word,meaning:w.meaning}))}, null, 2);
+  const blob = new Blob([data],{type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url; a.download='lexiuz_flash_export.json'; a.click(); URL.revokeObjectURL(url);
+});
+
+
+$('flashClearBtn').addEventListener('click', ()=> {
+  if(!state.flashWords || state.flashWords.length===0){ alert(currentLanguage === 'uz' ? 'Import qilingan hech narsa yoʻq' : 'No imported data'); return; }
+  if(!confirm(currentLanguage === 'uz' ? 'Import qilingan flash so‘zlarni tozalaysizmi? (Lugʻat saqlanadi)' : 'Clear imported flashcards? (Dictionary will be preserved)')) return;
+  state.flashWords = [];
+  saveState();
+  addAction(currentLanguage === 'uz' ? 'Import qilingan flashcards tozalandi' : 'Imported flashcards cleared');
+  loadFlashcard();
+  alert(currentLanguage === 'uz' ? 'Import qilingan flashcards tozalandi' : 'Imported flashcards cleared');
+});
+
+function loadFlashcard(){
+  const source = (state.flashWords && state.flashWords.length) ? state.flashWords : state.words;
+  updateFlashSourceLabel();
+  if(source.length===0){ 
+    $('flashWord').textContent='—'; 
+    $('flashMeaning').textContent='—'; 
+    $('flashIdx').textContent='0/0'; 
+    return; 
+  }
+  flashIndex = ((flashIndex % source.length)+source.length)%source.length;
+  const w = source[flashIndex];
+  $('flashWord').textContent = w.word;
+  $('flashMeaning').textContent = w.meaning;
+  $('flashIdx').textContent = `${flashIndex+1} / ${source.length}`;
+  cardViewport.classList.remove('flipped');
+}
+
+$('flashcard').addEventListener('click', ()=>{ cardViewport.classList.toggle('flipped'); });
+$('nextFlash').addEventListener('click', ()=>{ 
+  const src = (state.flashWords && state.flashWords.length) ? state.flashWords : state.words; 
+  if(src.length===0) return; 
+  flashIndex=(flashIndex+1)%src.length; 
+  loadFlashcard(); 
+});
+$('prevFlash').addEventListener('click', ()=>{ 
+  const src = (state.flashWords && state.flashWords.length) ? state.flashWords : state.words; 
+  if(src.length===0) return; 
+  flashIndex=(flashIndex-1+src.length)%src.length; 
+  loadFlashcard(); 
+});
+$('playFlash').addEventListener('click', ()=>{ 
+  const src = (state.flashWords && state.flashWords.length) ? state.flashWords : state.words; 
+  if(src[flashIndex]) tts(src[flashIndex].word); 
+});
+
+
+let quizState = { running:false, pool:[], currentItem:null, timerId:null, timeLeft:0, timePerQ:20, records:[], score:0, totalQuestions:0, source: [] };
+
+
+$('quizImportBtn').addEventListener('click', ()=> $('quizImportFile').click());
+$('quizImportFile').addEventListener('change', (e)=>{
+  const f = e.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = ()=>{
+    try{
+      const parsed = JSON.parse(r.result);
+      let arr = null;
+      if(Array.isArray(parsed)) arr = parsed;
+      else if(Array.isArray(parsed.words)) arr = parsed.words;
+      if(!Array.isArray(arr)){ alert(currentLanguage === 'uz' ? "JSON formati xato — 'words' yoki array kerak" : "Invalid JSON format — 'words' or array required"); e.target.value=''; return; }
+      const cleaned = [];
+      arr.forEach(item=>{
+        if(!item) return;
+        const w = String(item.word || '').trim();
+        const m = String(item.meaning || item.mean || item.meano || '').trim();
+        if(w && m) cleaned.push({id: genId(), word:w, meaning:m});
+      });
+      if(cleaned.length===0){ alert(currentLanguage === 'uz' ? "JSON ichida yaroqli so'z topilmadi" : "No valid words found in JSON"); e.target.value=''; return; }
+      state.quizWords = cleaned;
+      saveState();
+      addAction(currentLanguage === 'uz' ? `Quiz uchun ${cleaned.length} ta so'z import qilindi (lug'atga qo'shilmadi)` : `Imported ${cleaned.length} words for quiz (not added to dictionary)`);
+      alert(currentLanguage === 'uz' ? `${cleaned.length} ta quiz so'zlar yuklandi!` : `${cleaned.length} quiz words loaded!`);
+    }catch(err){ alert(currentLanguage === 'uz' ? "Xato: "+err.message : "Error: "+err.message); }
+    e.target.value = '';
+  };
+  r.readAsText(f);
+});
+
+
+$('startQuizBtn').addEventListener('click', startQuiz);
+$('stopQuizBtn').addEventListener('click', stopQuiz);
+
+function resetQuizUI(){
+  if(quizState.timerId){ clearInterval(quizState.timerId); quizState.timerId = null; }
+  quizState.running = false;
+  quizState.pool = [];
+  quizState.currentItem = null;
+  $('startQuizBtn').disabled = false;
+  $('stopQuizBtn').disabled = true;
+  $('quizTimer').textContent = '-- s';
+  $('quizQuestion').textContent = currentLanguage === 'uz' ? 'Quiz hali boshlanmadi' : 'Quiz not started yet';
+  $('quizOptions').innerHTML = '';
+  $('quizProgress').textContent = `0 / 0`;
+}
+
+function finishQuiz(){
+  if(quizState.timerId){ clearInterval(quizState.timerId); quizState.timerId = null; }
+  quizState.running = false;
+  $('startQuizBtn').disabled = false;
+  $('stopQuizBtn').disabled = true;
+  $('quizTimer').textContent = '-- s';
+  showResults();
+}
+
+
+function startQuiz(){
+  const source = (state.quizWords && state.quizWords.length) ? state.quizWords.slice() : state.words.slice();
+  if(source.length===0){ alert(currentLanguage === 'uz' ? "Quiz uchun yetarli so'z yo'q (lug'at yoki quiz import qiling)" : "Not enough words for quiz (add to dictionary or import for quiz)"); return; }
+
+  quizState.records = [];
+  quizState.score = 0;
+  quizState.running = true;
+  quizState.timePerQ = Math.max(5, parseInt($('timePerQuestion').value)||20);
+
+  if(state.quizWords && state.quizWords.length){
+    quizState.totalQuestions = Math.min(source.length, parseInt($('quizCount').value) || source.length);
+  } else {
+    const requested = Math.max(1, parseInt($('quizCount').value) || 5);
+    quizState.totalQuestions = Math.min(requested, source.length);
+  }
+
+  quizState.pool = shuffle(source).slice(0, quizState.totalQuestions);
+  quizState.source = source;
+  quizState.currentItem = null;
+
+  $('quizScore').textContent = quizState.score;
+  $('quizProgress').textContent = `0 / ${quizState.totalQuestions}`;
+  $('startQuizBtn').disabled = true;
+  $('stopQuizBtn').disabled = false;
+
+  nextQuiz();
+}
+
+function stopQuiz(){
+  if(!quizState.running) return;
+  quizState.running = false;
+  if(quizState.timerId) clearInterval(quizState.timerId);
+  quizState.timerId = null;
+  $('startQuizBtn').disabled = false;
+  $('stopQuizBtn').disabled = true;
+  finishQuiz();
+}
+
+
+function nextQuiz(){
+  if(!quizState.running) return;
+  if(quizState.pool.length===0){
+    finishQuiz();
+    return;
+  }
+  const item = quizState.pool.shift();
+  quizState.currentItem = item;
+  quizState.timeLeft = quizState.timePerQ;
+  renderQuizQuestion(item);
+  $('quizTimer').textContent = `${quizState.timeLeft}s`;
+  if(quizState.timerId) clearInterval(quizState.timerId);
+  quizState.timerId = setInterval(()=>{
+    quizState.timeLeft--;
+    $('quizTimer').textContent = `${quizState.timeLeft}s`;
+    if(quizState.timeLeft<=0){
+      clearInterval(quizState.timerId);
+      quizState.timerId = null;
+      recordAnswer(null, quizState.timePerQ);
+      setTimeout(()=>{ if(quizState.running) nextQuiz(); }, 700);
+    }
+  },1000);
+}
+
+function renderQuizQuestion(item){
+  const mode = $('quizMode').value;
+  const w = item;
+  const qText = mode==='wordToMeaning' ? 
+    (currentLanguage === 'uz' ? `"${w.word}" so'zining ma'nosi nima?` : `What is the meaning of "${w.word}"?`) :
+    (currentLanguage === 'uz' ? `Qaysi so'z bu ma'noga mos: "${w.meaning}"?` : `Which word matches this meaning: "${w.meaning}"?`);
+  $('quizQuestion').textContent = qText;
+  const others = quizState.source.filter(x=> !(x.word === w.word && x.meaning === w.meaning));
+  shuffle(others);
+  const opts = [w, ...others.slice(0,3)];
+  shuffle(opts);
+  const optsEl = $('quizOptions'); optsEl.innerHTML = '';
+  opts.forEach(opt=>{
+    const btn = document.createElement('button'); btn.className='opt-btn';
+    btn.textContent = mode==='wordToMeaning' ? opt.meaning : opt.word;
+    btn.onclick = ()=>{
+      if(!quizState.running) return;
+      if(quizState.timerId) clearInterval(quizState.timerId);
+      quizState.timerId = null;
+      const timeUsed = quizState.timePerQ - quizState.timeLeft;
+      recordAnswer(opt, Math.max(1, timeUsed));
+      setTimeout(()=>{ if(quizState.running) nextQuiz(); },700);
+    };
+    optsEl.appendChild(btn);
+  });
+}
+
+function recordAnswer(chosenOpt, timeTaken){
+  const mode = $('quizMode').value;
+  const current = quizState.currentItem;
+  const rec = {
+    word: current.word,
+    correctMeaning: current.meaning,
+    chosen: chosenOpt ? (mode==='wordToMeaning' ? chosenOpt.meaning : chosenOpt.word) : null,
+    correct: chosenOpt ? ((mode==='wordToMeaning'?chosenOpt.meaning:chosenOpt.word) === (mode==='wordToMeaning'?current.meaning:current.word)) : false,
+    timeTaken
+  };
+  quizState.records.push(rec);
+  if(rec.correct) quizState.score += 10; else quizState.score = Math.max(0, quizState.score - 2);
+  $('quizScore').textContent = quizState.score;
+  $('quizProgress').textContent = `${quizState.records.length} / ${quizState.totalQuestions}`;
+  highlightOptions(rec);
+  addAction(currentLanguage === 'uz' ? `Quiz javob: ${rec.word} — ${rec.correct ? 'Toʻgʻri' : 'Notoʻgʻri'}` : `Quiz answer: ${rec.word} — ${rec.correct ? 'Correct' : 'Incorrect'}`);
+  saveState();
+}
+
+function highlightOptions(rec){
+  const btns = Array.from($('quizOptions').children);
+  const mode = $('quizMode').value;
+  btns.forEach(b=>{
+    const v = b.textContent;
+    const isCorrect = (mode==='wordToMeaning' ? v===rec.correctMeaning : v===rec.word);
+    if(isCorrect) b.classList.add('correct');
+    if(rec.chosen && v===rec.chosen && !rec.correct) b.classList.add('wrong');
+    b.disabled = true;
+  });
+}
+
+function showResults(){
+  const ra = $('resultsArea'); ra.innerHTML = '';
+  const total = quizState.records.length;
+  const correctCount = quizState.records.filter(r=>r.correct).length;
+  const avgTime = total ? (quizState.records.reduce((s,r)=>s+r.timeTaken,0)/total).toFixed(1) : 0;
+  const summary = document.createElement('div'); summary.className='result-row';
+  summary.innerHTML = `<div><strong>${currentLanguage === 'uz' ? 'Ball:' : 'Score:'}</strong> ${quizState.score}</div><div class="small">${currentLanguage === 'uz' ? 'To\'g\'ri:' : 'Correct:'} ${correctCount}/${total}</div><div class="small">${currentLanguage === 'uz' ? 'O\'rtacha vaqt:' : 'Average time:'} ${avgTime}s</div>`;
+  ra.appendChild(summary);
+  quizState.records.forEach((r,i)=>{
+    const row = document.createElement('div'); row.className='result-row';
+    row.innerHTML = `<div style="max-width:65%"><strong>#${i+1} ${escapeHtml(r.word)}</strong><div class="small">${r.correct ? (currentLanguage === 'uz' ? 'Toʻgʻri' : 'Correct') : (currentLanguage === 'uz' ? 'Notoʻgʻri' : 'Incorrect')} • ${currentLanguage === 'uz' ? 'Javob:' : 'Answer:'} ${r.chosen ? escapeHtml(r.chosen) : (currentLanguage === 'uz' ? '<vaqt tugadi>' : '<time out>')}</div></div>
+      <div style="text-align:right"><div><strong>${r.correct?'+10':'-2'}</strong></div><div class="small">${currentLanguage === 'uz' ? 'Vaqt:' : 'Time:'} ${r.timeTaken}s</div></div>`;
+    ra.appendChild(row);
+  });
+  activateTab('results');
+}
+
+
+$('saveResultBtn').addEventListener('click', ()=>{
+  const name = (($('playerName').value)||(currentLanguage === 'uz' ? 'Anonim' : 'Anonymous')).trim();
+  if(!quizState.records.length){ alert(currentLanguage === 'uz' ? 'Quiz natijasi yoʻq' : 'No quiz results'); return; }
+  state.leaderboard.push({name, score:quizState.score, date:new Date().toISOString()});
+  state.leaderboard.sort((a,b)=>b.score - a.score);
+  state.leaderboard = state.leaderboard.slice(0,10);
+  addAction(currentLanguage === 'uz' ? `Natija saqlandi: ${name} — ${quizState.score}` : `Result saved: ${name} — ${quizState.score}`);
+  saveState(); renderLeaderboard(); alert(currentLanguage === 'uz' ? 'Natija saqlandi!' : 'Result saved!');
+});
+
+
+$('clearResultsBtn').addEventListener('click', ()=>{ 
+  $('resultsArea').innerHTML = `<div style="color:var(--muted)">${currentLanguage === 'uz' ? 'Natija tozalandi' : 'Results cleared'}</div>`; 
+  quizState.records = []; 
+  quizState.score=0; 
+  saveState(); 
+});
+
+
+function renderLeaderboard(){
+  const lb = $('leaderboard');
+  lb.innerHTML = '';
+
+  if(!state.leaderboard || state.leaderboard.length === 0){
+    const empty = document.createElement('div');
+    empty.style.color = 'var(--muted)';
+    empty.textContent = currentLanguage === 'uz' ? "Hech kim yo'q" : "No one yet";
+    lb.appendChild(empty);
+    return;
+  }
+
+  state.leaderboard.forEach((r,i)=>{
+    const d = document.createElement('div');
+    d.className = 'lb-row';
+    const left = document.createElement('div');
+    left.innerHTML = `${i+1}. <strong>${escapeHtml(r.name)}</strong>`;
+    const right = document.createElement('div');
+    right.style.color = 'var(--muted)';
+    right.textContent = `${r.score} • ${new Date(r.date).toLocaleString()}`;
+    d.appendChild(left);
+    d.appendChild(right);
+    lb.appendChild(d);
+  });
+}
+
+$('resetAllBtn').addEventListener('click', ()=>{
+  if(!confirm(currentLanguage === 'uz' ? 'Natijalar tozalansinmi? (Lugʻat va import qilingan soʻzlar saqlanadi)' : 'Clear results? (Dictionary and imported words will be preserved)')) return;
+  state.leaderboard = [];
+  quizState.records = [];
+  quizState.score = 0;
+  saveState();
+  addAction(currentLanguage === 'uz' ? 'Natijalar tozalandi' : 'Results cleared');
+  renderLeaderboard();
+  showResults();
+});
+
+
+function activateTab(name){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  const btn = Array.from(document.querySelectorAll('.tab-btn')).find(x=>x.dataset.tab===name);
+  if(btn) btn.classList.add('active');
+  document.querySelectorAll('section[id^="tab-"]').forEach(s=>s.style.display='none');
+  $('tab-'+name).style.display='block';
+}
+
+
+function renderSide(){ $('lastAction').textContent = state.lastAction || '—'; }
+
+
+function renderAll(){ 
+  renderWordList(); 
+  loadFlashcard(); 
+  renderLeaderboard(); 
+  renderSide(); 
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    updateLanguage();
+    renderAll();
+});
+
+
+window._lexi = {state, quizState};
+
+
+$('stopQuizBtn').disabled = true;
+
+function renderResults(){ showResults(); renderLeaderboard(); }
+
+$('translateBtn').addEventListener('click', async () => {
+    const inputText = $('inputText').value;
+    const sourceLang = $('sourceLang').value;
+    const targetLang = $('targetLang').value;
+    const translatedTextarea = $('translatedText');
+    const statusMessage = $('statusMessage');
+    const translateBtn = $('translateBtn');
+
+    if (inputText.trim() === '') {
+        translatedTextarea.value = '';
+        statusMessage.textContent = currentLanguage === 'uz' ? "Iltimos, tarjima qilish uchun matn kiriting." : "Please enter text to translate.";
+        statusMessage.style.color = 'red';
+        return;
+    }
+
+    statusMessage.textContent = currentLanguage === 'uz' ? "Tarjima qilinmoqda..." : "Translating...";
+    statusMessage.style.color = '#555';
+    translatedTextarea.value = '';
+    translateBtn.disabled = true;
+
+    try {
+        const response = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLang}&tl=${targetLang}&dt=t&q=${encodeURI(inputText)}`);
+        
+        if (!response.ok) {
+            throw new Error(`Xato: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const translatedText = data[0].map(item => item[0]).join('');
+
+        translatedTextarea.value = translatedText;
+        statusMessage.textContent = currentLanguage === 'uz' ? "Tarjima muvaffaqiyatli bajarildi!" : "Translation completed successfully!";
+        statusMessage.style.color = 'green';
+
+    } catch (error) {
+        console.error('Tarjima xatosi:', error);
+        translatedTextarea.value = currentLanguage === 'uz' ? "Tarjima qilishda xatolik yuz berdi. Iltimos, keyinroq urinib ko'ring." : "Translation error occurred. Please try again later.";
+        statusMessage.textContent = currentLanguage === 'uz' ? "Tarjima xatosi!" : "Translation error!";
+        statusMessage.style.color = 'red';
+    } finally {
+        translateBtn.disabled = false;
+    }
+});
+
+
+</script>
+</body>
+</html>
