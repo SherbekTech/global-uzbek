@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Global-Uzbek</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./style2.css">
+<link rel="stylesheet" href="./java.js">
+</head>
+<body>
+    
+<div class="header">
+  <div class="brand">
+    <div class="logo">
+      <img src="./a-minimalist-logo-design-featuring-the-t_mDEM7iNmQfWVXVfn4SZEzQ_5O8cj9HbTzeYUoXukUNBYg-removebg-preview.png" alt="">
+    </div>
+    <div>
+      <div class="title" data-uz="Global-Uzbek — O'zbek Milliy Lug'ati" data-en="Global-Uzbek — Uzbek National Dictionary">Global-Uzbek</div>
+      <div class="subtitle" data-uz="Lugʻat • Flashcard • Quiz • Tarjimon • Export/Import" data-en="Uzbek dictionary • Flashcard • Quiz • Translator • Export/Import">Lug'at • Flashcard • Quiz • Tarjimon • Export/Import</div>
+    </div>
+  </div>
+  <div class="language-switcher">
+    <button class="lang-btn active" data-lang="uz">O'Z</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+  </div>
+  <div class="clock" id="topClock">--:--:--</div>
+</div>
+
+<div class="container">
+  <div class="main">
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="lugat" data-uz="📚 Lugʻat" data-en="📚 Dictionary">📚 Lugʻat</button>
+      <button class="tab-btn" data-tab="flash" data-uz="🃏 Flashcard" data-en="🃏 Flashcard">🃏 Flashcard</button>
+      <button class="tab-btn" data-tab="quiz" data-uz="📝 Quiz" data-en="📝 Quiz">📝 Quiz</button>
+      <button class="tab-btn" data-tab="results" data-uz="📊 Natija" data-en="📊 Results">📊 Natija</button>
+      <button class="tab-btn" data-tab="translator" data-uz="🌐 Tarjimon" data-en="🌐 Translator">🌐 Tarjimon</button>
+    </div>
+
+    
+    <section id="tab-lugat">
+      <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap">
+        <div style="flex:1;min-width:260px">
+          <div class="controls">
+            <input id="searchInput" type="text" placeholder="So'z yoki ma'no qidiring..." data-uz-placeholder="So'z yoki ma'no qidiring..." data-en-placeholder="Search word or meaning..." />
+            <button class="btn ghost" id="selectAllBtn" data-uz="Barchasini tanlash" data-en="Select All">Barchasini tanlash</button>
+            <button class="btn danger" id="deleteSelectedBtn" data-uz="🗑 Tanlanganlarni o'chirish" data-en="🗑 Delete Selected">🗑 Tanlanganlarni o'chirish</button>
+          </div>
+        </div>
+
+        <div style="min-width:320px;display:flex;gap:8px;align-items:center">
+          <input id="newWord" type="text" placeholder="Yangi so'z (masalan: kitob)" data-uz-placeholder="Yangi so'z (masalan: kitob)" data-en-placeholder="New word (e.g.: book)" />
+          <input id="newMean" type="text" placeholder="Ma'nosi (masalan: book)" data-uz-placeholder="Ma'nosi (masalan: book)" data-en-placeholder="Meaning (e.g.: book)" />
+          <button class="btn" id="addWordBtn" data-uz="+ Qo'sh" data-en="+ Add">+ Qo'sh</button>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:8px;margin-top:8px;align-items:center;flex-wrap:wrap">
+        <button class="btn ghost" id="exportBtn" data-uz="Export JSON" data-en="Export JSON">Export JSON</button>
+        <label class="btn ghost" style="cursor:pointer">
+          <span data-uz="Import JSON" data-en="Import JSON">Import JSON</span>
+          <input id="importFile" type="file" accept=".json" style="display:none" />
+        </label>
+        <div style="color:var(--muted);font-size:13px;margin-left:auto">
+          <span data-uz="So'zlar:" data-en="Words:">So'zlar:</span> <strong id="wordCount">0</strong>
+        </div>
+      </div>
+
+      <ul id="wordList"></ul>
+    </section>
+
+    
+    <section id="tab-flash" style="display:none">
+      <div style="display:flex;flex-direction:column;gap:8px;align-items:center;margin-bottom:12px">
+        <div style="display:flex;gap:8px;width:100%;justify-content:center;align-items:center">
+          <button class="btn ghost" id="flashExportBtn" data-uz="Export Flashcards" data-en="Export Flashcards">Export Flashcards</button>
+          <button class="btn ghost" id="flashImportBtn" data-uz="Import Flashcards" data-en="Import Flashcards">Import Flashcards</button>
+          <button class="btn ghost" id="flashClearBtn" title="Import qilingan flashlarni tozalash" data-uz-title="Import qilingan flashlarni tozalash" data-en-title="Clear imported flashcards" data-uz="Clear Imported" data-en="Clear Imported">Clear Imported</button>
+          <input id="flashImportFile" type="file" accept=".json" style="display:none">
+          <div id="flashSourceLabel" style="color:var(--muted);margin-left:12px">Source: Lug'at</div>
+        </div>
+      </div>
+
+      <div class="flash-area">
+        <div class="flashcard" id="flashcard" title="Kartani bosib aylantiring" data-uz-title="Kartani bosib aylantiring" data-en-title="Click to flip the card">
+          <div class="card-viewport" id="cardViewport">
+            <div class="card-face card-front" id="cardFront">
+              <div style="font-size:40px;font-weight:900" id="flashWord">—</div>
+              <div style="margin-top:10px;color:var(--muted)" id="flashIdx">—</div>
+            </div>
+            <div class="card-face card-back" id="cardBack">
+              <div style="font-size:22px;font-weight:800" id="flashMeaning">—</div>
+              <div style="margin-top:8px;color:var(--muted);font-size:13px" id="flashExtra" data-uz="Ma'lumot" data-en="Information">Ma'lumot</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="min-width:240px;display:flex;flex-direction:column;gap:10px;align-items:center">
+          <div style="display:flex;gap:8px;width:100%;justify-content:center" class="flash-controls">
+            <button class="btn ghost" id="prevFlash" data-uz="◀ Oldingi" data-en="◀ Previous">◀ Oldingi</button>
+            <button class="btn" id="playFlash" data-uz="🔊 Tinglash" data-en="🔊 Listen">🔊 Tinglash</button>
+            <button class="btn ghost" id="nextFlash" data-uz="Keyingi ▶" data-en="Next ▶">Keyingi ▶</button>
+          </div>
+          <div style="font-size:13px;color:var(--muted);text-align:center" data-uz="Kartani bosib orqaga/oldinga aylantiring. Har kartada talaffuz mavjud." data-en="Click the card to flip back/forth. Each card has pronunciation.">Kartani bosib orqaga/oldinga aylantiring. Har kartada talaffuz mavjud.</div>
+        </div>
+      </div>
+    </section>
+
+    
+    <section id="tab-quiz" style="display:none">
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center">
+        <label style="font-size:13px;color:var(--muted)" data-uz="Savollar rejimi:" data-en="Question mode:">Savollar rejimi:</label>
+        <select id="quizMode">
+          <option value="wordToMeaning" data-uz="So'z → Ma'no (multiple choice)" data-en="Word → Meaning (multiple choice)">So'z → Ma'no (multiple choice)</option>
+          <option value="meaningToWord" data-uz="Ma'no → So'z (multiple choice)" data-en="Meaning → Word (multiple choice)">Ma'no → So'z (multiple choice)</option>
+        </select>
+        <label style="font-size:13px;color:var(--muted)" data-uz="Savollar soni:" data-en="Number of questions:">Savollar soni:</label>
+        <input id="quizCount" type="number" min="1" value="5" style="width:80px;padding:8px;border-radius:8px;border:1px solid rgba(6,40,60,0.06)" />
+
+        <button class="btn ghost" id="quizImportBtn" data-uz="Import JSON (Quiz)" data-en="Import JSON (Quiz)">Import JSON (Quiz)</button>
+        <input id="quizImportFile" type="file" accept=".json" style="display:none">
+
+        <label style="font-size:13px;color:var(--muted)" data-uz="Vaqt / savol (s):" data-en="Time / question (s):">Vaqt / savol (s):</label>
+        <input id="timePerQuestion" type="number" min="5" max="120" value="20" style="width:90px;padding:8px;border-radius:8px;border:1px solid rgba(6,40,60,0.06)" />
+
+        <button class="btn" id="startQuizBtn" data-uz="Boshlash" data-en="Start">Boshlash</button>
+        <button class="btn ghost" id="stopQuizBtn" data-uz="To'xtat" data-en="Stop">To'xtat</button>
+      </div>
+
+      <div style="margin-top:18px;display:flex;flex-direction:column;align-items:center">
+        <div class="question" id="quizQuestion">Quiz hali boshlanmadi</div>
+        <div class="timer" id="quizTimer">-- s</div>
+
+        <div class="options" id="quizOptions" style="margin-top:12px"></div>
+
+        <div style="margin-top:10px;display:flex;gap:12px;align-items:center">
+          <div style="font-size:13px;color:var(--muted)">
+            <span data-uz="Yechilgan:" data-en="Solved:">Yechilgan:</span> <span id="quizProgress">0 / 0</span>
+          </div>
+          <div style="font-size:13px;color:var(--muted)">
+            <span data-uz="Ball:" data-en="Score:">Ball:</span> <strong id="quizScore">0</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+<section id="tab-translator" style="display:none">
+    <div class="translation-box">
+        <textarea id="inputText" placeholder="Tarjima qilish uchun matn kiriting..." data-uz-placeholder="Tarjima qilish uchun matn kiriting..." data-en-placeholder="Enter text to translate..." rows="5"></textarea>
+        <div class="controls">
+            <select id="sourceLang">
+                <option value="en" data-uz="Inglizcha" data-en="English">Inglizcha</option>
+                <option value="uz" data-uz="O'zbekcha" data-en="Uzbek">O'zbekcha</option>
+            </select>
+            <button class="btn" id="translateBtn" data-uz="Tarjima qilish" data-en="Translate">Tarjima qilish</button>
+            <select id="targetLang">
+                <option value="uz" data-uz="O'zbekcha" data-en="Uzbek">O'zbekcha</option>
+                <option value="en" data-uz="Inglizcha" data-en="English">Inglizcha</option>
+            </select>
+        </div>
+        <textarea id="translatedText" placeholder="Tarjima bu yerda paydo bo'ladi..." data-uz-placeholder="Tarjima bu yerda paydo bo'ladi..." data-en-placeholder="Translation will appear here..." rows="5" readonly></textarea>
+        <div id="statusMessage" class="message"></div>
+    </div>
+</section>
+
+    
+    <section id="tab-results" style="display:none">
+      <h3 data-uz="Oxirgi natija" data-en="Latest Results">Oxirgi natija</h3>
+      <div id="resultsArea" class="results" style="margin-top:12px">
+        <div style="color:var(--muted)" data-uz="Quizni yakunlaganingizda shu yerda tafsilotlar chiqadi." data-en="Details will appear here when you finish the quiz.">Quizni yakunlaganingizda shu yerda tafsilotlar chiqadi.</div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:12px;align-items:center">
+        <input id="playerName" placeholder="Ismingiz (leaderboard uchun)" data-uz-placeholder="Ismingiz (leaderboard uchun)" data-en-placeholder="Your name (for leaderboard)" style="padding:8px;border-radius:8px;border:1px solid rgba(6,40,60,0.06)" />
+        <button class="btn" id="saveResultBtn" data-uz="Natijani saqlash" data-en="Save Result">Natijani saqlash</button>
+        <button class="btn ghost" id="clearResultsBtn" data-uz="Tozalash" data-en="Clear">Tozalash</button>
+      </div>
+    </section>
+  </div>
+
+  
+  <aside class="side">
+    <h4 data-uz="Statistika" data-en="Statistics">Statistika</h4>
+    <div style="display:flex;gap:8px;flex-direction:column">
+      <div style="display:flex;justify-content:space-between">
+        <span class="small" data-uz="Soʻzlar soni" data-en="Word count">Soʻzlar soni</span>
+        <strong id="sideWordCount">0</strong>
+      </div>
+      <div style="display:flex;justify-content:space-between">
+        <span class="small" data-uz="Oxirgi amal" data-en="Last action">Oxirgi amal</span>
+        <span id="lastAction" style="color:var(--muted)">—</span>
+      </div>
+    </div>
+
+    <hr style="margin:12px 0;border:none;border-top:1px solid rgba(6,40,60,0.04)" />
+
+    <h4 data-uz="Leaderboard (mahalliy)" data-en="Leaderboard (local)">Leaderboard (mahalliy)</h4>
+    <div class="leaderboard" id="leaderboard"></div>
+
+    <hr style="margin:12px 0;border:none;border-top:1px solid rgba(6,40,60,0.04)" />
+
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <button class="btn" id="resetAllBtn" data-uz="Natijalarni tozalash" data-en="Clear Results">Natijalarni tozalash</button>
+      <div style="font-size:12px;color:var(--muted)" data-uz="Natijalar localStorage dan o'chadi. Lugʻat saqlanadi." data-en="Results will be cleared from localStorage. Dictionary remains.">Natijalar localStorage dan o'chadi. Lugʻat saqlanadi.</div>
+    </div>
+  </aside>
+</div>
+
+<footer data-uz="© 2025 Global-Uzbek — Oʻzbek milliyligi ruhida" data-en="© 2025 Global-Uzbek — In the spirit of Uzbek nationalism">© 2025 Global-Uzbek — Oʻzbek milliyligi ruhida</footer>
+<script src="./java.js"></script>
+
+</body>
+</html>
